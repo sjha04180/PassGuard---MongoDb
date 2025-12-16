@@ -12,7 +12,7 @@ const Manager = () => {
     const [passwordArray, setPasswordArray] = useState([])
 
     const getPasswords = async () => {
-        let req = await fetch("https://pass-guard-mongo-db-backend.vercel.app/")
+        let req = await fetch(`${import.meta.env.VITE_BACKEND_URL}`)
         let passwords = await req.json()
         if (passwords) {
             setPasswordArray(passwords)
@@ -45,7 +45,7 @@ const Manager = () => {
             //If any such id exists in the db, delete item
             // ✅ If editing existing password
             if (form.id) {
-                await fetch("https://pass-guard-mongo-db-backend.vercel.app/", {
+                await fetch(`${import.meta.env.VITE_BACKEND_URL}`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ id: form.id })
@@ -53,10 +53,10 @@ const Manager = () => {
             }
 
             const newPassword = { ...form, id: uuidv4() };
-            
+
             // ✅ Save new / updated password
             setPasswordArray([...passwordArray, newPassword]);
-            await fetch("https://pass-guard-mongo-db-backend.vercel.app/", {
+            await fetch(`${import.meta.env.VITE_BACKEND_URL}`, {
                 method: "POST", headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ ...form, id: uuidv4() })
             })
@@ -110,7 +110,7 @@ const Manager = () => {
 
             setPasswordArray(passwordArray.filter(item => item.id !== id))
             // localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item => item.id !== id)))
-            let res = await fetch("https://pass-guard-mongo-db-backend.vercel.app/", {
+            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}`, {
                 method: "DELETE", headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id })
             })
