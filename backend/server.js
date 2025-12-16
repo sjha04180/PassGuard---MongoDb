@@ -47,6 +47,16 @@ app.delete('/', async (req, res) => {
   res.send({ success: true, result: findResult })
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`)
-})
+// app.listen(port, () => {
+//   console.log(`Example app listening on port http://localhost:${port}`)
+// })
+
+// // For local testing
+// if (process.env.NODE_ENV !== 'production') {
+//   app.listen(port, () => {
+//     console.log(`✅ Server is running on port ${port}`);
+//   });
+// }
+
+// Export the app for Vercel's serverless functions
+module.exports = app;
